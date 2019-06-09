@@ -1,0 +1,24 @@
+server:
+  port: 9090
+
+spring:
+  datasource:
+    driver-class-name: org.mariadb.jdbc.Driver
+    url: <jdbc-url/>
+    username: <username/>
+    password: <password/>
+    schema:
+    - classpath:db/schema/schema-base.sql
+    data:
+    - classpath:db/data-maria.sql
+    druid:
+      validation-query: SELECT 1
+      test-while-idle: true
+  profiles:
+    active: local
+
+mybatis-plus:
+  mapper-locations: classpath:/mapper/*Mapper.xml
+  global-config:
+    banner: false
+

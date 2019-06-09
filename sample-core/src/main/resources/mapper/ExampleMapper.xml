@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="in.hocg.sample.core.mapper.ExampleMapper">
+    <select id="queryAll" resultType="in.hocg.sample.facade.domain.Example">
+        SELECT *
+        FROM t_example
+    </select>
+</mapper>

@@ -1,0 +1,12 @@
+@startuml
+rectangle Core
+note right: 核心实现(Dao, Service等)
+rectangle Facade
+note right: 公用Pojo及API接口
+rectangle Web
+note right: Web 服务启动器
+
+Core -up-> Facade
+Web -up-> Core
+
+@enduml

@@ -1,0 +1,51 @@
+##日志的分类
+##1 框架日志
+##2 项目日志
+##` 2.1 trace
+##  2.2 debug
+##  2.3 warn
+##  2.4 info
+##  2.5 error
+##
+##规约
+##  1 appName_logType_logName.log。 logType:日志类型，推荐分类有 stats/desc/monitor/visit 等； logName:日志描述.如：mppserver_monitor_timeZoneConvert.log
+##    推荐对日志进行分类， 如将错误日志和业务日志分开存放
+##  2.对 trace/debug/info 级别的日志输出，必须使用条件输出形式或者使用占位符的方式。
+##    正例： logger.debug("Processing trade with id: {} and symbol : {} ", id, symbol);
+##  3 避免重复打印日志，浪费磁盘空间，务必在 log4j.xml 中设置 additivity=false。
+##  4 异常信息应该包括两类信息：案发现场信息和异常堆栈信息。如果不处理，那么通过关键字 throws 往上抛出。
+##    正例： logger.error(各类参数或者对象 toString + "_" + e.getMessage(), e);
+##  5 生产环境禁止输出 debug 日志； 有选择地输出 info 日志；
+##    大量地输出无效日志，不利于系统性能提升，也不利于快速定位错误点。记录日志时请
+##    思考：这些日志真的有人看吗？看到这条日志你能做什么？能不能给问题排查带来好处？
+##  6 用日志框架 SLF4J
+##  7 日志文件推荐至少保存 15 天
+##  8 可以使用 warn 日志级别来记录用户输入参数错误的情况，避免用户投诉时，无所适从。注意日志输出的级别， error 级别只记录系统逻辑出错、异常等重要的错误信息。如非必要，请不要在此场景打出 error 级别。
+#
+Configuration:
+  # log4j2 日志框架打印日志级别
+  status: info
+  name: example_core_default
+  appenders:
+    Console:
+      name: STDOUT
+      PatternLayout:
+        Pattern: "TraceId:%X{X-B3-TraceId}  %d %p %c{1.} [%t] %m%n"
+  Loggers:
+    logger:
+    -
+      name: in.hocg.example
+      level: trace
+      additivity: false
+      AppenderRef:
+        ref: STDOUT
+    -
+      name: in.hocg
+      level: trace
+      additivity: false
+      AppenderRef:
+        ref: STDOUT
+    Root:
+      level: info
+      AppenderRef:
+        ref: STDOUT
